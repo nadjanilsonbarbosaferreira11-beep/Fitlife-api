@@ -10,6 +10,7 @@ const PORT = 3001
 app.use(express.json())
 app.use(cors())
 
+
 app.get("/",(req,res)=>{
     res.json({
         mensagem:"API funcionando"
@@ -29,25 +30,25 @@ app.get("/planos", async (req, res)=>{
 
 app.post("/planos", async (req, res) => {
     try {
-        const {id, nome, valor} = req.body;
+        const {nome, plano, valor} = req.body;
 
         const sql = `
-            INSERT INTO produto (id, nome, valor)
+            INSERT INTO produto (nome, plano, valor)
             VALUES (?, ?, ?)
         `;
 
         const [result] = await db.execute(sql, [
-            id,
-            nome,
+            nome, 
+            plano,
             valor
         ]);
 
         res.status(201).json({
             mensagem: "Produto cadastrado com sucesso",
-            produto: {
+            plano: {
                 id: result.insertId,
-                id, 
                 nome,
+                plano,
                 valor
             }
         });
